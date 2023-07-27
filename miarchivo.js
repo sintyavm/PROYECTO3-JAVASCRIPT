@@ -38,7 +38,7 @@ const productos=[
 },
 ];
 
-let carrito = [];
+let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 productos.forEach((product) => {
     let content = document.createElement("div");
     content.className = "card";
@@ -73,12 +73,19 @@ productos.forEach((product) => {
         precio: product.precio,
         cantidad: product.cantidad,
     });
-} 
+ 
     console.log(carrito);
+    // opcionabajo linea
+    console.log(carrito.length);  
+    carritoCounter();
+    saveLocal();
+}
     });
 });
-//35
-
+    const saveLocal = () => {
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+};
+    
 
 // verCarrito.addEventListener("click", () => {
 const pintarCarrito =() =>{
@@ -142,5 +149,11 @@ const eliminarProducto = () => {
     carrito = carrito.filter((carritoId) =>{
         return carritoId !== foundId;
     });
+    carritoCounter();
     pintarCarrito();
-}
+};
+
+const carritoCounter = () =>{
+    cantidadCarrito.style.display = "block";
+    cantidadCarrito.innerText = carrito.length;
+};
